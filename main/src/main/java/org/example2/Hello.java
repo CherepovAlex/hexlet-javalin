@@ -14,7 +14,7 @@ public class Hello {
             if (name == null || name.isEmpty()){
                 name = "World";
             }
-            ctx.result("Hello" + name + "!");
+            ctx.result("Hello, " + name + "!");
         });
         app.start(7070); // Стартуем веб-сервер
     }
