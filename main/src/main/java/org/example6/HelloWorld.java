@@ -11,7 +11,6 @@ import static io.javalin.rendering.template.TemplateUtil.model;
 
 import org.example6.dto.courses.CoursePage;
 import org.example6.dto.courses.CoursesPage;
-import org.example6.model.Course;
 
 import java.nio.file.Paths;
 
@@ -25,6 +24,7 @@ public class HelloWorld {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte(templateEngine));
         });
+
         app.get("/", ctx -> ctx.render("index.jte"));
 
         app.get("/courses", ctx -> {
@@ -44,6 +44,7 @@ public class HelloWorld {
             var page = new CoursePage(course);
             ctx.render("courses/show.jte", model("page", page));
         });
+
         app.start(7070);
     }
 }
