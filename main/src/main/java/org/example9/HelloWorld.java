@@ -7,8 +7,12 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 import org.example9.dto.courses.CoursePage;
 import org.example9.dto.courses.CoursesPage;
+import org.example9.model.Course;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -26,9 +30,19 @@ public class HelloWorld {
         app.get("/", ctx -> ctx.render("index.jte"));
 
         app.get("/courses", ctx -> {
+            var term = ctx.queryParam("term");
             var courses = Data.getCourses();
+            List<Course> filteredCourses;
+            if (term != null && !term.isEmpty()) {
+                filteredCourses = courses.stream()
+                        .filter(course -> course.getName().toLowerCase().contains(term.toLowerCase()) ||
+                               course.getDescription().toLowerCase().contains(term.toLowerCase()))
+                        .collect(Collectors.toCollection(ArrayList::new));
+            } else {
+                filteredCourses = new ArrayList<>(courses);
+            }
             var header = "Programming courses";
-            var page = new CoursesPage(courses, header);
+            var page = new CoursesPage(filteredCourses, term, header);
             ctx.render("courses/index.jte", model("page", page));
         });
 

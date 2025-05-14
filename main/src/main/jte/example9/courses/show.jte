@@ -1,5 +1,5 @@
 <!-- src/main/jte/courses/show.jte -->
-@import org.example6.dto.courses.CoursePage
+@import org.example9.dto.courses.CoursePage
 @param CoursePage page
 
 <!doctype html>
