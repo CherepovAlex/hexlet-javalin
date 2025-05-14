@@ -1,4 +1,3 @@
-<!-- src/main/jte/index.jte -->
 <!doctype html>
 <html lang="en">
 <head>
