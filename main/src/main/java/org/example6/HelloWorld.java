@@ -1,5 +1,9 @@
 package org.example6;
 
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.resolve.DirectoryCodeResolver;
+
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
@@ -9,11 +13,17 @@ import org.example6.dto.courses.CoursePage;
 import org.example6.dto.courses.CoursesPage;
 import org.example6.model.Course;
 
+import java.nio.file.Paths;
+
 public class HelloWorld {
     public static void main(String[] args) {
+        var templateEngine = TemplateEngine.create(
+                new DirectoryCodeResolver(Paths.get("src/main/jte/example6")),
+                ContentType.Html
+        );
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
-            config.fileRenderer(new JavalinJte());
+            config.fileRenderer(new JavalinJte(templateEngine));
         });
         app.get("/", ctx -> ctx.render("index.jte"));
 
