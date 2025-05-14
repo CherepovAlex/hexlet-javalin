@@ -1,23 +1,21 @@
-package org.example6;
+package org.example9;
 
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.DirectoryCodeResolver;
-
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
-
-import static io.javalin.rendering.template.TemplateUtil.model;
-
-import org.example6.dto.courses.CoursePage;
-import org.example6.dto.courses.CoursesPage;
+import org.example9.dto.courses.CoursePage;
+import org.example9.dto.courses.CoursesPage;
 
 import java.nio.file.Paths;
+
+import static io.javalin.rendering.template.TemplateUtil.model;
 
 public class HelloWorld {
     public static void main(String[] args) {
         var templateEngine = TemplateEngine.create(
-                new DirectoryCodeResolver(Paths.get("main/src/main/jte/example6")),
+                new DirectoryCodeResolver(Paths.get("main/src/main/jte/example9")),
                 ContentType.Html
         );
         var app = Javalin.create(config -> {
