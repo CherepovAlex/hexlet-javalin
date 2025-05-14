@@ -33,14 +33,17 @@ public class HelloWorld {
             var term = ctx.queryParam("term");
             var courses = Data.getCourses();
             List<Course> filteredCourses;
+
             if (term != null && !term.isEmpty()) {
+                String searchTerm = term.toLowerCase();
                 filteredCourses = courses.stream()
-                        .filter(course -> course.getName().toLowerCase().contains(term.toLowerCase()) ||
-                               course.getDescription().toLowerCase().contains(term.toLowerCase()))
-                        .collect(Collectors.toCollection(ArrayList::new));
+                        .filter(course -> course.getName().contains(searchTerm) ||
+                               course.getDescription().toLowerCase().contains(searchTerm))
+                        .collect(Collectors.toList());;
             } else {
                 filteredCourses = new ArrayList<>(courses);
             }
+
             var header = "Programming courses";
             var page = new CoursesPage(filteredCourses, term, header);
             ctx.render("courses/index.jte", model("page", page));

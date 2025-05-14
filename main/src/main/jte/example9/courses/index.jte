@@ -28,6 +28,11 @@
             .search-box button {
                 padding: 8px 15px;
             }
+            .search-hint {
+                font-size: 0.9em;
+                color: #666;
+                margin-top: 5px;
+            }
         </style>
 </head>
 <body>
@@ -37,28 +42,33 @@
 
             <div class="search-box">
                 <form action="/courses" method="get">
-                    <input type="text" name="term" value="${page.getTerm()}" placeholder="Search courses..." />
+                    <input type="text" name="term" value="${page.getTerm()}" placeholder="Search by title or description..." />
                     <button type="submit">Search</button>
                     @if(page.getTerm() != null && !page.getTerm().isEmpty())
                          <a href="/courses" style="margin-left: 10px;">Show all</a>
                     @endif
+                    <div class="search-hint">
+                        Search will find matches in both course titles and descriptions
+                    </div>
                 </form>
             </div>
 
             @if(page.getCourses().isEmpty())
                 <div class="course-card">
-                    <p>No courses available yet</p>
+                    <p>No courses found</p>
                     @if(page.getTerm() != null && !page.getTerm().isEmpty())
                         <p>Try a different search term or <a href="/courses">show all courses</a></p>
                     @endif
                 </div>
             @else
                 @if(page.getTerm() != null && !page.getTerm().isEmpty())
-                    <p>Showing results for: <strong>${page.getTerm()}</strong></p>
+                    <p>Showing ${page.getCourses().size()} results for: <strong>${page.getTerm()}</strong></p>
+                @else
+                    <p>Showing all ${page.getCourses().size()} courses</p>
                 @endif
 
                 @for(var course : page.getCourses())
-                    <div class="course-card">>
+                    <div class="course-card">
                         <h2><a href="/courses/${course.getId()}">${course.getName()}</a></h2>
                         <p>${course.getDescription()}</p>
                     </div>
