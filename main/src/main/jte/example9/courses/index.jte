@@ -1,4 +1,3 @@
-<!-- src/main/jte/courses/index.jte -->
 @import org.example9.dto.courses.CoursesPage
 @param CoursesPage page
 

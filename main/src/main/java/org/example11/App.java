@@ -7,6 +7,7 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
 import java.nio.file.Paths;
+import java.util.Map;
 
 import org.example11.repository.UserRepository;
 import org.example11.model.User;
@@ -30,9 +31,9 @@ public class App {
             ctx.render("users/build.jte");
         });
 
-        app.get("/users/", ctx -> {
-
-            ctx.render("users/build.jte");
+        app.get("/users", ctx -> {
+            var users = UserRepository.getEntities();
+            ctx.render("users/index.jte", model("users", users));
         });
 
         app.post("/users", ctx -> {
@@ -40,6 +41,12 @@ public class App {
             var email = ctx.formParam("email").trim().toLowerCase();
             var password = ctx.formParam("password");
             var passwordConfirmation = ctx.formParam("passwordConfirmation");
+
+            if (!password.equals(passwordConfirmation)) {
+                ctx.status(400);
+                ctx.result("Passwords do not match");
+                return;
+            }
 
             var user = new User(name, email, password);
             UserRepository.save(user);
