@@ -4,8 +4,12 @@
 
 @template.example15.layout.page(
     content = @`
-        <h1>Редактирование пользователя</h1>
-        <form action="${NamedRoutes.usersPath(page.getUser().getId())}" method="post">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Редактирование пользователя</h1>
+            <a href="${NamedRoutes.userPath(page.getUser().getId())}" class="btn btn-secondary">Назад к пользователю</a>
+        </div>
+
+        <form action="${NamedRoutes.updateUserPath(page.getUser().getId())}" method="post">
             <input type="hidden" name="_method" value="patch">
 
             <div class="mb-3">
@@ -37,8 +41,10 @@
                 <div class="form-text">Оставьте пустым, если не хотите менять пароль</div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-            <a href="${NamedRoutes.usersPath()}" class="btn btn-secondary">Отмена</a>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-primary me-md-2">Сохранить изменения</button>
+                <a href="${NamedRoutes.userPath(page.getUser().getId())}" class="btn btn-outline-secondary">Отмена</a>
+            </div>
         </form>
     `,
     footer = @`

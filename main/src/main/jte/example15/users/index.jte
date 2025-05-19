@@ -24,10 +24,17 @@
                 @else
                     @for(var user : page.getUsers())
                        <tr>
-                                <td><a href="/users/${user.getId()}">${user.getId()}</a></td>
-                                <td>${user.getName()}</td>
-                                <td>${user.getEmail()}</td>
-                                <td>${user.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE)}</td>
+                            <td>${user.getId()}</td>
+                            <td>${user.getName()}</td>
+                            <td>${user.getEmail()}</td>
+                            <td>${user.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE)}</td>
+                             <td>
+                                <a href="${NamedRoutes.userPath(user.getId())}">Просмотр</a>
+                                <a href="${NamedRoutes.editUserPath(user.getId())}">Редактировать</a>
+                                <form action="${NamedRoutes.deleteUserPath(user.getId())}" method="post">
+                                    <button type="submit">Удалить</button>
+                                </form>
+                            </td>
                        </tr>
                     @endfor
                 @endif
