@@ -9,7 +9,7 @@ plugins {
 }
 
 application {
-    mainClass.set("org.example7.App")
+    mainClass.set("org.example14.App")
 }
 
 group = "org.example"

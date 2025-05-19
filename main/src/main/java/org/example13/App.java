@@ -12,7 +12,6 @@ import org.example13.model.Course;
 import org.example13.dto.courses.CoursePage;
 import org.example13.dto.courses.BuildCoursePage;
 import org.example13.repository.CourseRepository;
-import org.example13.NamedRoutes;
 
 import java.nio.file.Paths;
 import java.util.List;
@@ -22,7 +21,7 @@ import static io.javalin.rendering.template.TemplateUtil.model;
 public class App {
     public static void main(String[] args) {
         var templateEngine = TemplateEngine.create(
-                new DirectoryCodeResolver(Paths.get("main/src/main/jte/example13")),
+                new DirectoryCodeResolver(Paths.get("main/src/main/jte")),
                 ContentType.Html
         );
         var app = Javalin.create(config -> {
@@ -30,17 +29,17 @@ public class App {
             config.fileRenderer(new JavalinJte(templateEngine));
         });
 
-        app.get("/", ctx -> ctx.render("index.jte"));
+        app.get("/", ctx -> ctx.render("example13/index.jte"));
 
         app.get(NamedRoutes.coursesPath(), ctx -> {
             List<Course> courses = CourseRepository.getEntities();
             var page = new CoursePage(courses);
-            ctx.render("courses/index.jte", model("page", page));
+            ctx.render("example13/courses/index.jte", model("page", page));
         });
 
         app.get(NamedRoutes.buildCoursesPath(), ctx -> {
             var page = new BuildCoursePage();
-            ctx.render("courses/build.jte", model("page", page));
+            ctx.render("example13/courses/build.jte", model("page", page));
         });
 
         app.post(NamedRoutes.coursesPath(), ctx -> {
@@ -57,10 +56,10 @@ public class App {
                         .get();
                 var course = new Course(name, description);
                 CourseRepository.save(course);
-                ctx.redirect("/courses");
+                ctx.redirect("example13/courses");
             } catch (ValidationException e) {
                 var page = new BuildCoursePage(name, description, e.getErrors());
-                ctx.render("courses/build.jte", model("page", page));
+                ctx.render("example13/courses/build.jte", model("page", page));
             }
         });
         app.start(7070);

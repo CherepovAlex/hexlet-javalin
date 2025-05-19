@@ -11,7 +11,7 @@
   <body>
     <div class="mx-auto p-4 py-md-5">
       <main>
-            <a href="/courses">Все курсы</a>
+            <a href="example13/courses">Все курсы</a>
       </main>
     </div>
   </body>
