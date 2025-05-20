@@ -28,7 +28,7 @@
                             <td>${user.getName()}</td>
                             <td>${user.getEmail()}</td>
                             <td>${user.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE)}</td>
-                             <td>
+                            <td>
                                 <a href="${NamedRoutes.userPath(user.getId())}">Просмотр</a>
                                 <a href="${NamedRoutes.editUserPath(user.getId())}">Редактировать</a>
                                 <form action="${NamedRoutes.deleteUserPath(user.getId())}" method="post">
